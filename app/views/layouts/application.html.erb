@@ -2,14 +2,75 @@
 <html>
   <head>
     <%= render 'shared/head' %>
+
   </head>
 
   <body>
-    <%= render 'shared/navbar' %>
-    <div class="container">
-      <%= yield %>      
+    <% if flash[:notice] %>
+      <div class="notification is-primary global-notification">
+        <p class="notice"><%= notice %></p>
+      </div>
+    <% end %>
+    <% if flash[:alert] %>
+    <div class="notification is-danger global-notification">
+      <p class="alert"><%= alert %></p>
     </div>
-    <%= render 'shared/footer' %>   
-  </body>
+    <% end %>
+     <nav class="navbar is-dark" role="navigation" aria-label="main navigation">
+      <div class="navbar-brand">
+        <%= link_to root_path, class:"navbar-item" do %>
+          <h1 class="title is-5 has-text-white">Dribbble Clone</h1>
+        <% end  %>
+      <div class="navbar-burger burger" data-target="navbar">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
 
+      <div id="navbar" class="navbar-menu">
+
+        <div class="navbar-start">
+          <div class="navbar-item">
+            <div class="field is-grouped">
+              <p class="control">
+                <%= link_to 'Shots', root_path , class:"button is-dark" %>
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="navbar-end">
+          <div class="navbar-item">
+            <div class="field is-grouped">
+              <% if user_signed_in? %>
+              <p class="control">
+                <%= link_to new_shot_path, class:"button is-primary"  do %>
+                  <span class="icon is-small"><i class="fa fa-upload"></i></span>
+                  <span>New Shot</span>
+                <% end %>
+              </p>
+              <p class="control">
+                <%= link_to current_user.first_name, edit_user_registration_path, class:"button is-dark" %>
+              </p>
+              <p class="control">
+                <%= button_to "Log Out", destroy_user_session_path, method: :delete, class:"button is-dark" %>
+              </p>
+              <% else %>
+              <p class="control">
+                 <%= link_to "Sign In", new_user_session_path, class:"button is-dark" %>
+              </p>
+              <p class="control">
+                <%= link_to "Sign up", new_user_registration_path, class:"button is-dark"%>
+              </p>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav> 
+
+    <%= yield %>
+    <%= javascript_include_tag 'shots' %>
+  </body>
 </html>

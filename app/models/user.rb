@@ -22,6 +22,7 @@ class User < ApplicationRecord
   rolify
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
+  acts_as_voter    
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
     after_create :assign_default_role
@@ -34,4 +35,6 @@ class User < ApplicationRecord
         self.add_role(:customer) if self.roles.blank?
       end
     end  
+  has_many :shots, dependent: :destroy
+  has_many :comments, dependent: :destroy
 end
