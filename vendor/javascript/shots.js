@@ -4,7 +4,7 @@ $(document).on('turbo:load', function() {
 	var Shots = {
 		previewShot() {
 			if (window.File && window.FileList && window.FileReader) {
-				console.log(window.File)
+				// console.log(window.File)
 				// alert('im in here');
 				function handleFileSelect(evt) {
 					// console.log('hello');
